@@ -10,7 +10,6 @@ class Instruction
     "RSHIFT" => lambda { |a, b| a >> b },
     "LSHIFT" => lambda { |a, b| a << b },
     "ASSIGN" => lambda { |a, _| a }
-
   }
 
   def initialize(str)
