@@ -45,9 +45,4 @@ class Circuit
   def complete?
     @queue.empty?
   end
-
-  private
-  def is_numeric?(str)
-    true if Integer(str) rescue false
-  end
 end
