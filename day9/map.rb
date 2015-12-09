@@ -29,7 +29,7 @@ class Map
   end
 
   def calc_all_paths
-    all_routes = @distances.map {|k,v| k.to_a}.to_a.flatten.uniq.permutation.to_a
+    all_routes = @distances.map {|k,v| k.to_a}.flatten.uniq.permutation.to_a
     all_routes.each.with_object([]) do |cities, dists|
       dists << calc_dist(cities)
     end
