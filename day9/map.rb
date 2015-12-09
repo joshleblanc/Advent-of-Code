@@ -1,28 +1,39 @@
 require 'set'
 
 class Map
+
+  attr_reader :paths
+
   def initialize
     @distances = {}
+    @paths = []
   end
 
   def init_from_file(file)
-    File.open(file, 'r') do |infile|
-      while(line = infile.gets)
-        cities, distance = parse(line)
-        @distances[cities.to_set] = distance
-      end
-    end
+    @distances = distances_from_file(file)
+    @paths = calc_all_paths
   end
 
   def shortest_path
-    calc_all_paths.min
+    @paths.min
   end
 
   def longest_path
-    calc_all_paths.max
+    @paths.max
   end
 
   private
+  def distances_from_file(file)
+    hash = {}
+    File.open(file, 'r') do |infile|
+      while(line = infile.gets)
+        cities, distance = parse(line)
+        hash[cities.to_set] = distance
+      end
+    end
+    hash
+  end
+
   def parse(str)
     s = str.split
     [[s.first, s[2]], Integer(s.last)]
