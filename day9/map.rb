@@ -37,11 +37,11 @@ class Map
 
   def calc_dist(cities)
     cities.each_cons(2).with_object([]) do |(o, t), sum|
-      sum << get_dist(o, t).to_i
+      sum << get_dist(o, t)
     end.inject(:+)
   end
 
   def get_dist(one, two)
-    @distances[[one,two].to_set]
+    @distances[[one,two].to_set].to_i
   end
 end
