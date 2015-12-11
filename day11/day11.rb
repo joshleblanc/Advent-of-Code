@@ -21,9 +21,7 @@ def is_valid?(str)
 end
 
 def next_password(str)
-  while(!is_valid?(str))
-    str = str.next
-  end
+  str = str.next while !is_valid? str
   str
 end
 
