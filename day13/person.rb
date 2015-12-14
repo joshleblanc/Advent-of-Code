@@ -12,7 +12,7 @@ class Person
   def add_relationship(rel)
     @relationships[rel.first] = rel.last
   end
-  
+
   private
   def parse(line)
     split_line = line.split
