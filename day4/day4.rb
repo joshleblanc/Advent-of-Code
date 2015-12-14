@@ -5,9 +5,8 @@ def get_hex(str, num)
 end
 
 def find_md5_hash_with_leading_zeroes(num_zeroes, str)
-  while(i = (i || 0).next)
-    return i if get_hex(str, i)[0...num_zeroes] == '0' * num_zeroes
-  end
+  str_to_find = '0' * num_zeroes
+  (1..Float::INFINITY).find { |i| get_hex(str, i)[0...num_zeroes] == str_to_find }
 end
 
 input = File.read('input').strip
