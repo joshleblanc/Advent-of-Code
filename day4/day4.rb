@@ -5,7 +5,7 @@ def get_hex(str, num)
 end
 
 def find_md5_hash_with_leading_zeroes(num_zeroes, str)
-  0.upto((10 ** str.length) - 1).each do |i|
+  while(i = (i || 0).next)
     return i if get_hex(str, i)[0...num_zeroes] == '0' * num_zeroes
   end
 end
