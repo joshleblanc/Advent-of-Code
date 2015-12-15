@@ -34,6 +34,6 @@ class Recipe
   end
 
   def calc_score(totals)
-    totals[0] * totals[1] * totals[2] * totals[3]
+    totals.first(4).inject(:*)
   end
 end
