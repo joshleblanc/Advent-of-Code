@@ -9,6 +9,6 @@ def combinations_of(arr)
   end
 end
 
-combinations = combinations_of File.read('input').lines.map { |n| n.to_i }
+combinations = combinations_of File.read('input').lines.map(&:to_i)
 p "The number of different combinations is #{combinations.flatten(1).size}"
 p "The number of different ways you can fill the smallest number of containers is #{combinations.first.size}"
