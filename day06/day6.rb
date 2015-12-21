@@ -36,9 +36,7 @@ class LightGrid
   end
 
   def toggle!(start, finish)
-    update!(start, finish) { |val|
-      (val-1).abs
-    }
+    update!(start, finish) { |val| (val-1).abs }
   end
 
   def on!(start, finish)
