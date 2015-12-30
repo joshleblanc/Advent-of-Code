@@ -27,16 +27,14 @@ end
 
 def find(replacements, word)
   vals = []
-  replacements.each.with_object([]) do |r, threads|
-    threads << Thread.new { vals << find_r(word, r, replacements, 'e', 0) }
+  replacements.map do |r|
+    Thread.new { vals << find_r(word, r, replacements, 'e', 0) }
   end.each(&:join)
   vals.compact.min + 1
 end
 
 def get_num_distinct_molecules(replacements, original_word)
-  replacements.each.with_object([]) do |r, obj|
-    obj << get_molecules(original_word, r)
-  end.flatten.uniq.length
+  replacements.map { |r| get_molecules(original_word, r) }.flatten.uniq.length
 end
 
 def get_replacements(lines)
