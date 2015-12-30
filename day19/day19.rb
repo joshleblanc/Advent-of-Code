@@ -1,20 +1,3 @@
-
-lines = File.read('input').lines
-
-original_word = lines.last.strip
-replacements = lines[0..lines.length - 3].map do |n|
-  n.split(" => ").map(&:strip)
-end
-
-# original_word = "HOHOHO"
-# replacements = [
-#   ["e", "H"],
-#   ["e", "O"],
-#   ["H", "HO"],
-#   ["H", "OH"],
-#   ["O", "HH"]
-# ]
-
 def get_molecules(original_word, r)
   tmp = original_word
   matches = 0
@@ -31,32 +14,40 @@ def get_molecules(original_word, r)
   end
 end
 
-@steps = []
 def find_r(curr_str, curr_rep, replacements, word, steps)
-  final_steps = 0
-  get_molecules(curr_str, curr_rep).each do |m|
-    replacements.each do |r|
-      if m == word
-        p @steps
-        @steps << steps
-      end
-      next if m.length > word.length
-      final_steps = find_r(m, r, replacements, word, steps + 1)
+  get_molecules(curr_str, curr_rep.reverse).each do |m|
+    return steps if m == word
+    replacements.reverse!.each do |r|
+     val = find_r(m, r, replacements, word, steps + 1)
+     return val if val
     end
   end
-  return final_steps
+  nil
 end
 
 def find(replacements, word)
-  replacements.each do |r|
-    find_r(r.first, r, replacements, word, 0)
-  end
+  vals = []
+  replacements.each.with_object([]) do |r, threads|
+    threads << Thread.new { vals << find_r(word, r, replacements, 'e', 0) }
+  end.each(&:join)
+  vals.compact.min + 1
 end
 
-arr = replacements.each.with_object([]) do |r, obj|
-  obj << get_molecules(original_word, r)
-end.flatten
-p arr.uniq.length
+def get_num_distinct_molecules(replacements, original_word)
+  replacements.each.with_object([]) do |r, obj|
+    obj << get_molecules(original_word, r)
+  end.flatten.uniq.length
+end
 
-find(replacements, original_word)
-p @steps.min + 1
+def get_replacements(lines)
+  lines[0..lines.length - 3].map { |n| n.split(" => ").map(&:strip) }
+end
+
+lines = File.read('input').lines
+original_word = lines.last.strip
+replacements = get_replacements(lines)
+
+
+
+p "#{get_num_distinct_molecules(replacements, original_word)} distinct molecules can be created"
+p "It takes #{find(replacements, original_word)} steps to create #{original_word}"
