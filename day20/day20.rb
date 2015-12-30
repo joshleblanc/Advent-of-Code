@@ -19,8 +19,7 @@ end
 def find_with_lazy_elves(num)
   times_delivered = []
   2.upto(num / 10).find do |i|
-    divisors = divisors_of(i)
-    divisors.select do |div|
+    divisors_of(i).select do |div|
       times_delivered[div] ||= -1
       times_delivered[div] += 1
       times_delivered[div] <= 50
