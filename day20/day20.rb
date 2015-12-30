@@ -10,8 +10,6 @@ def divisors_of(number)
   divisors
 end
 
-input = File.read('input').strip.to_i
-
 def find(num)
   2.upto(num / 10).find do |i|
     divisors_of(i).inject(:+) * 10 >= num
@@ -30,5 +28,6 @@ def find_with_lazy_elves(num)
   end
 end
 
+input = File.read('input').strip.to_i
 p "The lowest house number to get at least #{input} presents is #{find(input)}"
 p "The lowest house number to get at least #{input} presents with lazy elves is #{find_with_lazy_elves(input)}"
