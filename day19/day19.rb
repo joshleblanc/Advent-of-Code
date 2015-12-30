@@ -22,7 +22,7 @@ def find_r(curr_str, curr_rep, replacements, word, steps)
 end
 
 def find(replacements, word)
-  replacements.map { |r| find_r(word, r, replacements, 'e', 0) } + 1
+  replacements.map { |r| find_r(word, r, replacements, 'e', 0) }.compact.min + 1
 end
 
 def get_num_distinct_molecules(replacements, original_word)
