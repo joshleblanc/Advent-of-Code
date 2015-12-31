@@ -1,7 +1,13 @@
-def replace(word, matches, replacement)
-  word.gsub(replacement.first).with_index do |m, i|
-    i == matches ? replacement.last : m
+def find_with(array)
+  array.each do |e|
+    v = yield(e)
+    return v if v
   end
+  nil
+end
+
+def replace(word, num_matches, r)
+  word.gsub(r.first).with_index { |m, i| i == num_matches ? r.last : m }
 end
 
 def get_molecules(word, r)
@@ -13,12 +19,10 @@ def get_molecules(word, r)
 end
 
 def find_r(curr_str, curr_rep, replacements, word, steps)
-  get_molecules(curr_str, curr_rep.reverse).each do |m|
+  find_with(get_molecules(curr_str, curr_rep.reverse)) do |m|
     return steps if m == word
-    val = replacements.reverse!.find { |r| find_r(m, r, replacements, word, steps + 1) }
-    return val if val
+    find_with(replacements.reverse!) { |r| find_r(m, r, replacements, word, steps + 1) }
   end
-  nil
 end
 
 def find(replacements, word)
